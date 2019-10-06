@@ -1,28 +1,46 @@
 using System;
 using System.Collections.Generic;
 
-namespace CountnumberofOccurrance
+namespace NonRepeated
 {
   internal static class Program
   {
-    private static void Main()
+    public static void Main(string[] args)
     {
-      const string str = "Today is Monday";
-      var ch = str.ToCharArray();
-      CountWord(ch);
+      const string str = "geeksforgeeks";
+      var test = new Test();
+      var t =test.FirstNonRepeating(str);
+      Console.WriteLine(t);
+      Console.WriteLine(t == -1 ? "Either " +
+                                      "all characters are repeating or string " +
+                                      "is empty" : "First non-repeating character"
+                                                   + " is " + str[t]);
+    }
+  }
+
+  internal class Test
+  {
+    private const int No_Of_Char = 256;
+    private static readonly char [] Count = new char[No_Of_Char];
+  public int FirstNonRepeating(string str)
+    {
+      GetCharCount(str);
+      var index = -1;
+      for (var i = 0; i < str.Length; i++)
+      {
+        if (Count[str[i]] != 1) continue;
+        index = i;
+        break;
+      }
+      return index;
     }
 
-    private static void CountWord(IReadOnlyList<char> ch)
+    private static void GetCharCount(string str)
     {
-      var count = 0;
-      for (var i = 0; i < ch.Count; i++)
+      foreach (var t in str)
       {
-        if (ch[i] == 'a')
-        {
-          count++;
-        }
+        Count[t]++;
       }
-      Console.WriteLine("Number of word user in string : "+count);
     }
   }
 }
